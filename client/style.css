@@ -1,0 +1,322 @@
+:root {
+  --bg: #09111f;
+  --bg-deep: #030711;
+  --panel: rgba(12, 20, 37, 0.86);
+  --panel-strong: rgba(18, 28, 49, 0.94);
+  --line: rgba(117, 167, 255, 0.24);
+  --text: #ebf3ff;
+  --muted: #9fb7d3;
+  --cyan: #59f3ff;
+  --pink: #ff5cb8;
+  --lime: #c8ff6a;
+  --orange: #ff9d54;
+  --danger: #ff5578;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background:
+    radial-gradient(circle at top left, rgba(89, 243, 255, 0.12), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(255, 92, 184, 0.1), transparent 28%),
+    linear-gradient(160deg, var(--bg) 0%, var(--bg-deep) 68%);
+  color: var(--text);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(circle at center, black 32%, transparent 92%);
+  pointer-events: none;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 20px;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.menu-panel,
+.hud-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 28px;
+}
+
+.menu-panel::after,
+.hud-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.07), transparent 45%);
+  pointer-events: none;
+}
+
+.title-stack h1 {
+  margin: 8px 0 12px;
+  font-family: "Bungee", sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.6rem);
+  line-height: 0.95;
+  color: var(--text);
+  text-shadow:
+    0 0 18px rgba(89, 243, 255, 0.32),
+    0 0 34px rgba(255, 92, 184, 0.16);
+}
+
+.eyebrow,
+.label {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  color: var(--cyan);
+}
+
+.subtitle,
+.status-copy,
+.instructions-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.menu-actions,
+.status-card,
+.instructions-card {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.join-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.arcade-button,
+.room-input {
+  min-height: 52px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+  font: inherit;
+}
+
+.arcade-button {
+  cursor: pointer;
+  padding: 0 20px;
+  font-weight: 700;
+  color: #0a1221;
+  transition:
+    transform 140ms ease,
+    filter 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.arcade-button:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.04);
+}
+
+.primary {
+  background: linear-gradient(135deg, var(--cyan), #9fd8ff);
+  box-shadow: 0 14px 34px rgba(89, 243, 255, 0.24);
+}
+
+.secondary {
+  background: linear-gradient(135deg, var(--pink), #ffb885);
+  box-shadow: 0 14px 34px rgba(255, 92, 184, 0.24);
+}
+
+.ghost {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.room-input {
+  padding: 0 16px;
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+}
+
+.status-card,
+.instructions-card {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 22px;
+  background: var(--panel-strong);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.status-card strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.2rem;
+}
+
+.game-panel {
+  min-width: 0;
+}
+
+.hud-frame {
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+}
+
+.hud-top,
+.hud-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 48px;
+  padding: 8px 6px;
+}
+
+#gameCanvas {
+  width: 100%;
+  height: calc(100% - 96px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    radial-gradient(circle at center, rgba(39, 60, 96, 0.72), rgba(6, 11, 22, 0.96)),
+    #06101d;
+}
+
+.hud-pill,
+.stat-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(10, 19, 34, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.stat-card {
+  border-radius: 20px;
+  min-width: 220px;
+  justify-content: space-between;
+}
+
+.meter {
+  position: relative;
+  height: 8px;
+  flex: 1;
+  min-width: 90px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.meter > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: inherit;
+}
+
+.overlay {
+  position: absolute;
+  inset: 72px 14px 62px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.overlay-card {
+  max-width: 520px;
+  padding: 24px 26px;
+  border-radius: 24px;
+  background: rgba(3, 8, 16, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.overlay-card h2 {
+  margin: 0 0 8px;
+  font-family: "Bungee", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+}
+
+.overlay-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1120px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .hud-frame {
+    height: auto;
+    min-height: 70vh;
+  }
+
+  #gameCanvas {
+    height: min(72vh, 720px);
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell {
+    padding: 14px;
+    gap: 14px;
+  }
+
+  .menu-panel,
+  .hud-frame {
+    border-radius: 22px;
+  }
+
+  .join-row {
+    grid-template-columns: 1fr;
+  }
+
+  .hud-top,
+  .hud-bottom {
+    flex-direction: column;
+  }
+}

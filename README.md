@@ -1,51 +1,78 @@
-# Multiplayer Zombie Mayhem — Agent Pack
+# Zombie Mayhem Co-op
 
-This folder contains a sequenced set of agent instruction files for building a **2-player online co-op** top-down zombie wave survival shooter.
+A 2-player online co-op top-down zombie wave survival prototype built with plain JavaScript, Canvas, WebRTC data channels, and a tiny Node.js signalling server.
 
-## Intent
+## Features
 
-This pack converts the original single-player arcade survival brief into a multiplayer version where:
-- one player hosts
-- another player joins with a room code
-- both fight endless zombie waves together
-- the host is authoritative for the simulation
+- Host creates a short room code, guest joins with that code
+- Host-authoritative simulation for player movement, enemies, bullets, pickups, waves, and score
+- Local 2-player debug mode for validating shared simulation before online play
+- Auto-aim, auto-fire, XP pickups, health pickups, level-ups, and endless wave escalation
+- Canvas HUD, overlays, floating combat text, glows, and arcade-style presentation
 
-## Included files
+## Tech Stack
 
-- `AGENTS.md`
-- `01_project_setup.md`
-- `02_gameplay_core.md`
-- `03_local_two_player_debug.md`
-- `04_signalling_server.md`
-- `05_webrtc_host_join.md`
-- `06_network_sync_players.md`
-- `07_network_sync_world.md`
-- `08_ui_flow_and_hud.md`
-- `09_polish_and_gamefeel.md`
-- `10_deploy_and_readme.md`
+- Client: HTML, CSS, JavaScript ES modules, Canvas
+- Networking: WebRTC data channel
+- Signalling: Node.js + WebSocket (`ws`)
 
-## Recommended use
+## Project Structure
 
-Use them in order.
+- `client/`
+  - `index.html`
+  - `style.css`
+  - `src/main.js`
+  - `src/config.js`
+  - `src/state.js`
+  - `src/input.js`
+  - `src/render.js`
+  - `src/game.js`
+  - `src/net.js`
+- `server/server.js`
 
-The sequence is designed to reduce risk:
-1. set up project
-2. build local gameplay core
-3. prove two-player simulation locally
-4. add signalling
-5. connect peers
-6. sync player movement
-7. sync combat/world
-8. polish UI flow
-9. add juice
-10. finish deployment/docs
+## Local Run
 
-## Notes
+1. Install dependencies:
 
-This pack intentionally avoids over-scoping:
-- 2 players max
-- co-op only
-- host-authoritative
-- lightweight signalling server
-- WebRTC data channel
-- no heavy frontend frameworks required
+```bash
+npm install
+```
+
+2. Start the server:
+
+```bash
+npm start
+```
+
+3. Open [http://localhost:3000](http://localhost:3000) in two tabs or two devices on the same reachable host.
+
+## Host / Join Flow
+
+- Host clicks `Host Game`
+- Server creates a 4-character room code
+- Guest enters the code and clicks `Join Game`
+- The signalling server relays WebRTC SDP/ICE handshake traffic
+- Once the data channel opens, the host simulates the match and sends snapshots
+- The guest sends input only and renders the host-authoritative state
+
+## Deployment Guidance
+
+- The browser client is static and can be hosted on GitHub Pages, Netlify, or any static host
+- Multiplayer still needs a signalling service running somewhere reachable by both players
+- The signalling server can be deployed to Render, Railway, Fly.io, or a VPS
+- WebRTC carries gameplay traffic peer-to-peer after signalling completes
+
+## Known Limitations
+
+- Guest prediction is intentionally light and may still show correction under latency
+- Upgrade choices are auto-selected by the host simulation for prototype scope
+- Audio is not implemented yet
+- Mobile controls are not implemented
+- For internet play, HTTPS hosting is recommended so browsers allow WebRTC cleanly
+
+## Architecture Summary
+
+- `server/server.js` only handles room creation, room joins, and signalling relay
+- The host browser owns final gameplay truth
+- The guest browser sends movement input only
+- Rendering is separated from simulation so the host loop can remain authoritative

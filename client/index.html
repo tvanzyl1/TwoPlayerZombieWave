@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zombie Mayhem Co-op</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <section class="menu-panel">
+        <div class="title-stack">
+          <p class="eyebrow">2-Player Online Co-op Survival</p>
+          <h1>Zombie Mayhem</h1>
+          <p class="subtitle">
+            Host the chaos, drop a room code, and survive neon zombie nonsense with one friend.
+          </p>
+        </div>
+
+        <div class="menu-actions">
+          <button id="hostButton" class="arcade-button primary">Host Game</button>
+          <div class="join-row">
+            <input
+              id="roomCodeInput"
+              class="room-input"
+              type="text"
+              maxlength="6"
+              placeholder="ROOM"
+              autocomplete="off"
+            />
+            <button id="joinButton" class="arcade-button secondary">Join Game</button>
+          </div>
+          <button id="debugButton" class="arcade-button ghost">Local 2P Debug</button>
+        </div>
+
+        <div class="status-card">
+          <div>
+            <span class="label">Room Code</span>
+            <strong id="roomCodeDisplay">----</strong>
+          </div>
+          <div>
+            <span class="label">Connection</span>
+            <strong id="connectionState">Idle</strong>
+          </div>
+          <p id="statusText" class="status-copy">
+            One player hosts. One player joins with a code. Then both bully zombies.
+          </p>
+        </div>
+
+        <div class="instructions-card">
+          <p class="label">Controls</p>
+          <p>`WASD` move, auto-fire handles the rest.</p>
+          <p>Debug mode adds Player 2 on arrow keys for local chaos testing.</p>
+        </div>
+      </section>
+
+      <main class="game-panel">
+        <div class="hud-frame">
+          <div id="hudTop" class="hud-top"></div>
+          <canvas id="gameCanvas" width="1280" height="720" aria-label="Zombie Mayhem arena"></canvas>
+          <div id="hudBottom" class="hud-bottom"></div>
+          <div id="overlay" class="overlay"></div>
+        </div>
+      </main>
+    </div>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "two-player-zombie-wave",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Host-authoritative 2-player co-op zombie wave survival prototype with WebRTC and a Node.js signalling server.",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "dev": "node server/server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
